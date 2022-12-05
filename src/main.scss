@@ -1,0 +1,50 @@
+$color: red;
+$border_radius: (
+    "small": 4px,
+    "medium" : 20px
+);
+$bg: (
+   "main": blue,
+   "secondary": purple 
+);
+
+$font_weights: (
+    "normal": 400,
+    "medium": 500,
+    "medium_bold": 600,
+    "bold": 700,
+    "bolder": 800,
+    "boldest": 900
+);
+
+@function bg_value($bg_color) {
+    @if map-has-key($bg, $bg_color) {
+        @return map-get($bg, $bg_color);
+    } @else {
+        @return $bg_color ;
+    }
+}
+
+@function get_color($color , $bg_color) {
+    @if $bg_color == black {
+        @return white ;
+    } @else {
+        @return $color
+    }
+};
+
+@mixin btn($border_radius) {
+  border: 2px solid black;
+  border-radius: $border_radius;
+  padding: 8px 10px;  
+  cursor: pointer
+}
+
+body {
+    .test {
+        @include btn(map-get($border_radius , "small"));
+        background-color: bg_value(black);
+        color: get_color(purple , bg_value(black));
+        font-weight: map-get($font_weights, "medium_bold");
+    }
+}
